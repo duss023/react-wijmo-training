@@ -1,0 +1,371 @@
+[
+  {
+    "lesson": 1,
+    "title": "React 状态：点击菜单，为什么画面会切换？",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "App.tsx",
+        "start": 25,
+        "end": 25
+      },
+      {
+        "file": "App.tsx",
+        "start": 53,
+        "end": 57
+      },
+      {
+        "file": "App.tsx",
+        "start": 158,
+        "end": 160
+      }
+    ]
+  },
+  {
+    "lesson": 2,
+    "title": "TypeScript 数据模型：先说清楚一条项目长什么样",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "domain.ts",
+        "start": 15,
+        "end": 26
+      },
+      {
+        "file": "domain.ts",
+        "start": 27,
+        "end": 39
+      }
+    ]
+  },
+  {
+    "lesson": 3,
+    "title": "数据绑定：把数组交给表格显示",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "useProjectModel.ts",
+        "start": 24,
+        "end": 26
+      },
+      {
+        "file": "api/projects.ts",
+        "start": 38,
+        "end": 48
+      },
+      {
+        "file": "api/projects.ts",
+        "start": 16,
+        "end": 37
+      },
+      {
+        "file": "server/mockApi.ts",
+        "start": 44,
+        "end": 62
+      },
+      {
+        "file": "useProjectModel.ts",
+        "start": 59,
+        "end": 78
+      },
+      {
+        "file": "App.tsx",
+        "start": 158,
+        "end": 158
+      },
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 109,
+        "end": 131
+      }
+    ]
+  },
+  {
+    "lesson": 4,
+    "title": "显示格式与下拉选项：值和显示方式分开",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "domain.ts",
+        "start": 2,
+        "end": 14
+      },
+      {
+        "file": "useProjectModel.ts",
+        "start": 43,
+        "end": 44
+      },
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 133,
+        "end": 137
+      },
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 153,
+        "end": 158
+      },
+      {
+        "file": "pages/FormPage.tsx",
+        "start": 42,
+        "end": 51
+      }
+    ]
+  },
+  {
+    "lesson": 5,
+    "title": "搜索筛选：只展示符合条件的记录",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "useProjectModel.ts",
+        "start": 80,
+        "end": 91
+      }
+    ]
+  },
+  {
+    "lesson": 6,
+    "title": "排序与分组：换个顺序，或者放进不同文件夹",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 80,
+        "end": 86
+      },
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 99,
+        "end": 102
+      }
+    ]
+  },
+  {
+    "lesson": 7,
+    "title": "分页：总数据很多，一次只看一部分",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "useProjectModel.ts",
+        "start": 94,
+        "end": 95
+      },
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 188,
+        "end": 193
+      }
+    ]
+  },
+  {
+    "lesson": 8,
+    "title": "单元格模板：把一个数字画成进度条",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 165,
+        "end": 177
+      }
+    ]
+  },
+  {
+    "lesson": 9,
+    "title": "表单草稿：为什么点取消不会改坏原数据？",
+    "module": "form",
+    "image": "screens/form.png",
+    "sources": [
+      {
+        "file": "pages/FormPage.tsx",
+        "start": 26,
+        "end": 28
+      },
+      {
+        "file": "useProjectModel.ts",
+        "start": 198,
+        "end": 211
+      },
+      {
+        "file": "pages/FormPage.tsx",
+        "start": 116,
+        "end": 116
+      }
+    ]
+  },
+  {
+    "lesson": 10,
+    "title": "输入控件：数字、日期和选项各用合适的工具",
+    "module": "form",
+    "image": "screens/form.png",
+    "sources": [
+      {
+        "file": "pages/FormPage.tsx",
+        "start": 69,
+        "end": 78
+      },
+      {
+        "file": "pages/FormPage.tsx",
+        "start": 92,
+        "end": 98
+      }
+    ]
+  },
+  {
+    "lesson": 11,
+    "title": "统一校验：不让不合格的数据被保存",
+    "module": "form",
+    "image": "screens/form.png",
+    "sources": [
+      {
+        "file": "domain.ts",
+        "start": 41,
+        "end": 55
+      },
+      {
+        "file": "useProjectModel.ts",
+        "start": 200,
+        "end": 204
+      }
+    ]
+  },
+  {
+    "lesson": 12,
+    "title": "事件桥接：表格改了，React 怎么知道？",
+    "module": "charts",
+    "image": "screens/charts.png",
+    "sources": [
+      {
+        "file": "useProjectModel.ts",
+        "start": 46,
+        "end": 57
+      },
+      {
+        "file": "useProjectModel.ts",
+        "start": 97,
+        "end": 97
+      }
+    ]
+  },
+  {
+    "lesson": 13,
+    "title": "图表绑定：先汇总，再交给图表绘制",
+    "module": "charts",
+    "image": "screens/charts.png",
+    "sources": [
+      {
+        "file": "domain.ts",
+        "start": 82,
+        "end": 93
+      },
+      {
+        "file": "pages/ChartsPage.tsx",
+        "start": 15,
+        "end": 21
+      }
+    ]
+  },
+  {
+    "lesson": 14,
+    "title": "五层组织树：一个 children 字段就能继续往下展开",
+    "module": "tree",
+    "image": "screens/tree.png",
+    "sources": [
+      {
+        "file": "organization.ts",
+        "start": 2,
+        "end": 11
+      },
+      {
+        "file": "pages/TreePage.tsx",
+        "start": 50,
+        "end": 62
+      }
+    ]
+  },
+  {
+    "lesson": 15,
+    "title": "透视分析：自己选择“按什么统计什么”",
+    "module": "pivot",
+    "image": "screens/pivot.png",
+    "sources": [
+      {
+        "file": "pages/PivotPage.tsx",
+        "start": 21,
+        "end": 26
+      },
+      {
+        "file": "pages/PivotPage.tsx",
+        "start": 35,
+        "end": 38
+      },
+      {
+        "file": "pages/PivotPage.tsx",
+        "start": 47,
+        "end": 49
+      }
+    ]
+  },
+  {
+    "lesson": 16,
+    "title": "异步加载：等待、失败和重试都要有画面",
+    "module": "guide",
+    "image": "screens/guide.png",
+    "sources": [
+      {
+        "file": "useProjectModel.ts",
+        "start": 60,
+        "end": 77
+      },
+      {
+        "file": "App.tsx",
+        "start": 11,
+        "end": 11
+      },
+      {
+        "file": "App.tsx",
+        "start": 174,
+        "end": 186
+      }
+    ]
+  },
+  {
+    "lesson": 17,
+    "title": "API 保存：把修改提交给模拟服务",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "api/projects.ts",
+        "start": 49,
+        "end": 55
+      },
+      {
+        "file": "useProjectModel.ts",
+        "start": 111,
+        "end": 124
+      }
+    ]
+  },
+  {
+    "lesson": 18,
+    "title": "导出：把当前表格交给 Excel",
+    "module": "grid",
+    "image": "screens/grid.png",
+    "sources": [
+      {
+        "file": "useProjectModel.ts",
+        "start": 165,
+        "end": 189
+      }
+    ]
+  }
+]

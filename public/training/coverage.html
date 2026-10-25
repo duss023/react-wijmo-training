@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>技术覆盖矩阵与官方资料</title
+  ><style>
+    body {
+      margin: 0;
+      font-family: -apple-system, "Microsoft YaHei", sans-serif;
+      background: #f4f6fa;
+      color: #213451;
+      line-height: 1.8;
+    }
+    main {
+      max-width: 1020px;
+      margin: auto;
+      padding: 50px 32px;
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 1.3;
+    }
+    h2 {
+      margin-top: 42px;
+      color: #255dc0;
+    }
+    h3 {
+      margin-top: 28px;
+    }
+    a {
+      color: #2867df;
+    }
+    code,
+    pre {
+      font-family: Consolas, monospace;
+      background: #e9eef7;
+      padding: 3px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      padding: 20px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    td,
+    th {
+      padding: 12px;
+      border: 1px solid #d7e0ec;
+      text-align: left;
+    }
+    small {
+      color: #7c8da7;
+    }
+    .lead {
+      font-size: 19px;
+      color: #687b97;
+    }
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+    section {
+      margin: 24px 0;
+      padding: 26px;
+      background: white;
+      border: 1px solid #e0e7f0;
+      border-radius: 8px;
+    }
+    li {
+      margin: 8px 0;
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      nav {
+        display: none;
+      }
+      main {
+        padding: 0;
+      }
+      section {
+        break-inside: avoid;
+      }
+      a {
+        color: inherit;
+      }
+    }
+  </style>
+  <main>
+    <nav>
+      <a href="index.html">资料首页</a><a href="index.html">学习课件</a
+      ><a href="instructor.html">讲师手册</a><a href="labs.html">练习与答案</a
+      ><a href="coverage.html">技术覆盖表</a><a href="/">Demo</a>
+    </nav>
+    <h1>技术覆盖矩阵与官方资料</h1>
+    <p>
+      “尽可能覆盖”以可运行和可讲授为前提，并不等于完整复刻 Wijmo
+      全产品。以下表格区分已实现范围与后续专项。
+    </p>
+    <table>
+      <tr>
+        <th>主题</th>
+        <th>内容</th>
+        <th>源码定位</th>
+        <th>状态</th>
+      </tr>
+      <tr>
+        <td>React / TS</td>
+        <td>类型、JSX、props、Hooks、StrictMode、ErrorBoundary、Suspense</td>
+        <td>App.tsx / useProjectModel.ts / domain.ts</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>生命周期</td>
+        <td>稳定实例、事件订阅与清理、AbortController</td>
+        <td>useProjectModel.ts 的 Effects</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>CollectionView</td>
+        <td>排序、过滤、分组、分页、当前项、变更跟踪</td>
+        <td>useProjectModel.ts / pages/GridPage.tsx</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>FlexGrid</td>
+        <td>显式列、格式化、DataMap、冻结列、拖列、模板、行选择</td>
+        <td>pages/GridPage.tsx</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>FlexGridFilter</td>
+        <td>列筛选，与工具栏过滤叠加</td>
+        <td>pages/GridPage.tsx 的 FlexGridFilter</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>Input</td>
+        <td>ComboBox、InputNumber、InputDate、草稿取消、统一校验</td>
+        <td>pages/FormPage.tsx</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>图表 / Gauge</td>
+        <td>柱状图、饼图、只读 LinearGauge、聚合</td>
+        <td>pages/ChartsPage.tsx</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>导航</td>
+        <td>五层 TreeView、分支汇总、路径、批量展开收起、项目详情联动</td>
+        <td>organization.ts / pages/TreePage.tsx</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>OLAP</td>
+        <td>PivotEngine、Panel、Grid、Chart、懒加载</td>
+        <td>pages/PivotPage.tsx</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>导出</td>
+        <td>Excel 异步导出、PDF API 调用</td>
+        <td>useProjectModel.ts 的 exportExcel/exportPdf</td>
+        <td>已实现；PDF 中文字体待配置</td>
+      </tr>
+      <tr>
+        <td>持久化 / 测试</td>
+        <td>真实 fetch、本地 HTTP 模拟 API、500/取消、内存保存、Date 恢复与集成测试</td>
+        <td>api/projects.ts / server/mockApi.ts / server/mockApi.test.ts</td>
+        <td>已实现</td>
+      </tr>
+      <tr>
+        <td>可访问性 / 国际化</td>
+        <td>标签、aria-live、中文 culture、响应式布局</td>
+        <td>App.tsx / pages/*.tsx / style.css</td>
+        <td>已实现基础；未做完整审计</td>
+      </tr>
+      <tr>
+        <td>服务端集成</td>
+        <td>服务端分页、认证、权限、乐观锁、数据库事务</td>
+        <td>讲师手册</td>
+        <td>扩展设计，未实现</td>
+      </tr>
+      <tr>
+        <td>专项控件</td>
+        <td>MultiRow / TransposedGrid / FlexSheet / ReportViewer</td>
+        <td>官方文档</td>
+        <td>学习路线，未实现</td>
+      </tr>
+      <tr>
+        <td>高级网格</td>
+        <td>合并管理器、拖放行、明细行、自定义编辑器、大数据远程虚拟化</td>
+        <td>官方文档</td>
+        <td>学习路线，未实现</td>
+      </tr>
+    </table>
+    <h2>官方参考资料</h2>
+    <p>
+      核对日期：2026-10-21。依赖版本以 package-lock.json 为准；Wijmo
+      示例只用于理解 API，本 Demo 源码为本课程独立实现。
+    </p>
+    <ul>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/docs/GettingStarted/QuickStart/QuickStart-React"
+          >React QuickStart：包、React 包装组件与 CSS</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/docs/GettingStarted/React-Components"
+          >React Components：控件与包装组件</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/demos/Core/CollectionView/Overview/react"
+          >CollectionView 官方 React 示例</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/demos/Grid/PagingScrolling/Client-sidePaging/react"
+          >客户端分页官方示例</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/api/classes/Wijmo_Grid_Xlsx.Flexgridxlsxconverter.html"
+          >FlexGridXlsxConverter API</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/api/classes/Wijmo_Grid_Pdf.Flexgridpdfconverter.html"
+          >FlexGridPdfConverter API</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developer.mescius.com/wijmo/docs/GettingStarted/Licensing"
+          >授权说明：30 天试用、水印、分发键与主机名</a
+        >
+      </li>
+      <li><a href="https://react.dev/learn">React 官方学习资料</a></li>
+    </ul>
+  </main>
+</html>

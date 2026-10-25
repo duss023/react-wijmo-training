@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>实验手册与参考答案</title
+  ><style>
+    body {
+      margin: 0;
+      font-family: -apple-system, "Microsoft YaHei", sans-serif;
+      background: #f4f6fa;
+      color: #213451;
+      line-height: 1.8;
+    }
+    main {
+      max-width: 1020px;
+      margin: auto;
+      padding: 50px 32px;
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 1.3;
+    }
+    h2 {
+      margin-top: 42px;
+      color: #255dc0;
+    }
+    h3 {
+      margin-top: 28px;
+    }
+    a {
+      color: #2867df;
+    }
+    code,
+    pre {
+      font-family: Consolas, monospace;
+      background: #e9eef7;
+      padding: 3px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      padding: 20px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    td,
+    th {
+      padding: 12px;
+      border: 1px solid #d7e0ec;
+      text-align: left;
+    }
+    small {
+      color: #7c8da7;
+    }
+    .lead {
+      font-size: 19px;
+      color: #687b97;
+    }
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+    section {
+      margin: 24px 0;
+      padding: 26px;
+      background: white;
+      border: 1px solid #e0e7f0;
+      border-radius: 8px;
+    }
+    li {
+      margin: 8px 0;
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      nav {
+        display: none;
+      }
+      main {
+        padding: 0;
+      }
+      section {
+        break-inside: avoid;
+      }
+      a {
+        color: inherit;
+      }
+    }
+  </style>
+  <main>
+    <nav>
+      <a href="index.html">资料首页</a><a href="index.html">学习课件</a
+      ><a href="instructor.html">讲师手册</a><a href="labs.html">练习与答案</a
+      ><a href="coverage.html">技术覆盖表</a><a href="/">Demo</a>
+    </nav>
+    <h1>实验手册与参考答案</h1>
+    <p class="lead">
+      先完成任务，再展开答案。答案为局部实现指导，需放入对应作用域。
+    </p>
+    <section>
+      <h2>实验 1 · 环境与字段定位</h2>
+      <p>
+        <b>任务：</b
+        >启动工程，找到项目类型、初始化数据、网格绑定和课件入口。将页面副标题改为团队名称。
+      </p>
+      <p>
+        <b>验收：</b>能够解释 props、state、事件回调；npm test 与 npm run build
+        通过。
+      </p>
+      <p>
+        <b>提示：</b>先从 src/App.tsx 与 src/pages/ 找 h1 和标题；从 src/domain.ts 找
+        Project。
+      </p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+源码从 createRoot 进入 App；UI 状态使用 useState，业务视图在稳定 CollectionView 中，模块切换使用 tab。副标题是普通 JSX 文本，不需要额外状态。</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 2 · 排序与分页</h2>
+      <p><b>任务：</b>增加“按预算降序”按钮，再将每页改为 30 条。</p>
+      <p><b>验收：</b>120 条源数据不变；当前页 30 条，预算由高到低。</p>
+      <p><b>提示：</b>参考 SortDescription 和 pageSize 的 Effect。</p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+view.sortDescriptions.clear();
+view.sortDescriptions.push(new SortDescription(&#x27;budget&#x27;, false));
+// 通过 UI setPageSize(30)，Effect 更新 view.pageSize。</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 3 · 筛选与分组</h2>
+      <p>
+        <b>任务：</b
+        >搜索负责人“李华”，启用部门分组，说明筛选与分组的关系。新增“只显示未完成”的
+        UI 筛选。
+      </p>
+      <p><b>验收：</b>清除筛选可恢复全部数据；分页重置到第一页。</p>
+      <p>
+        <b>提示：</b>新增布尔 state，并把条件加入现有 view.filters 中的工具栏
+        predicate，而不是覆盖列筛选使用的 view.filter。
+      </p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+const matchesStatus = !unfinishedOnly || row.status !== &#x27;已完成&#x27;;
+// 与部门、关键字条件做 &amp;&amp;；将 unfinishedOnly 放入 Effect 依赖。
+// 防抖结束时 view.moveToFirstPage()。</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 4 · 表单与统一校验</h2>
+      <p>
+        <b>任务：</b>把名称规则增加为长度
+        2～40；在网格与表单分别输入空值、单字符、合法值。提交草稿，再取消另一份草稿。
+      </p>
+      <p>
+        <b>验收：</b
+        >非法内容不能保存；取消不改变原记录；两个入口使用同一校验规则。
+      </p>
+      <p><b>提示：</b>修改 validate 的 name 分支，避免仅在输入组件上加限制。</p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+if (field === &#x27;name&#x27; &amp;&amp; (!item.name?.trim() || item.name.trim().length &lt; 2 || item.name.trim().length &gt; 40)) return &#x27;名称长度应为 2～40&#x27;;
+// 增加 domain.test.ts 用例，分别测试 1、2、40、41 字符。</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 5 · 异步与故障恢复</h2>
+      <p>
+        <b>任务：</b>保存一条更改，然后启用接口故障，再关闭并重载。解释
+        AbortController 的职责。
+      </p>
+      <p><b>验收：</b>故障提示可见；重试恢复已保存记录；取消请求不显示错误。</p>
+      <p><b>提示：</b>Effect 返回 controller.abort；catch 过滤 AbortError。</p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+loadProjects 通过 fetch 请求本地 GET /api/projects，response.ok 检查 HTTP 状态，response.json() 解析响应，response.data 进入 view。保存发送 PUT，重置发送 DELETE。fetch 使用同一个 AbortSignal，取消或普通 HTTP 500 走不同错误处理路径。</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 6 · 图表与统计口径</h2>
+      <p><b>任务：</b>新增一项“已完成项目的部门工时”统计，复用 FlexChart。</p>
+      <p><b>验收：</b>各部门工时之和等于已完成记录工时总和，与网格分页无关。</p>
+      <p>
+        <b>提示：</b>先过滤 rows，再 summarize；不要把当前 view.items 当成全量。
+      </p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+const completedSummary = useMemo(() =&gt; summarize(rows.filter(r =&gt; r.status === &#x27;已完成&#x27;)), [rows, tick]);
+// &lt;FlexChart itemsSource={completedSummary} bindingX=&quot;department&quot;&gt; ... binding=&quot;hours&quot;</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 7 · OLAP 与导出</h2>
+      <p>
+        <b>任务：</b>以部门为行、状态为列、预算为值生成透视；导出一份筛选后的
+        Excel。
+      </p>
+      <p>
+        <b>验收：</b>解释 PivotEngine 与图表数据源；检查导出行数、金额和列标题。
+      </p>
+      <p>
+        <b>提示：</b>PivotPanel 拖拽；Excel
+        导出跟随网格视图，不是全部数据库记录。
+      </p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+预算字段拖到值区域，删除工时值字段。返回网格，清楚设置筛选和页大小后导出。分别记录当前页数与导出行数；确认分组行是否包含，避免把导出作为不受限制的数据接口。</pre
+        >
+      </details>
+    </section>
+    <section>
+      <h2>实验 8 · 综合：风险等级</h2>
+      <p>
+        <b>任务：</b>新增 risk 字段（低 / 中 /
+        高），实现初始化、下拉列、表单、校验、高风险筛选、统计卡片和保存恢复，增加测试。
+      </p>
+      <p>
+        <b>验收：</b>完整演示：新增 → 编辑 → 校验失败 → 正确保存 → 刷新恢复 →
+        筛选 → 汇总；旧数据可迁移。
+      </p>
+      <p>
+        <b>提示：</b>修改
+        Project、makeProjects、editableFields、validate、deserialize、FlexGridColumn、草稿表单和筛选
+        Effect。
+      </p>
+      <details>
+        <summary>参考答案与讲评</summary>
+        <pre>
+// domain.ts
+risk: &#x27;低&#x27; | &#x27;中&#x27; | &#x27;高&#x27;;
+// makeProjects 初始化 risk: &#x27;低&#x27;
+// validate 中检查 [&#x27;低&#x27;,&#x27;中&#x27;,&#x27;高&#x27;].includes(item.risk)
+// editableFields 添加 risk
+// deserialize 映射 r.risk ?? &#x27;低&#x27;，再进行校验（旧数据迁移）
+// UI 中使用稳定 DataMap；表单通过 setDraft 创建新对象
+// 筛选追加条件；卡片统计 rows.filter(r =&gt; r.risk === &#x27;高&#x27;).length
+// 测试：合法风险、非法风险、旧 JSON 迁移、持久化恢复。</pre
+        >
+      </details>
+    </section>
+    <h2>综合实验评分（100 分）</h2>
+    <table>
+      <tr>
+        <th>项目</th>
+        <th>分值</th>
+        <th>通过条件</th>
+      </tr>
+      <tr>
+        <td>类型和数据链路</td>
+        <td>20</td>
+        <td>初始化、恢复与迁移均有 risk</td>
+      </tr>
+      <tr>
+        <td>网格和表单</td>
+        <td>20</td>
+        <td>下拉编辑一致，取消不改源数据</td>
+      </tr>
+      <tr>
+        <td>校验与错误恢复</td>
+        <td>20</td>
+        <td>非法值不可保存，失败信息清楚</td>
+      </tr>
+      <tr>
+        <td>筛选和统计</td>
+        <td>15</td>
+        <td>统计口径明确，筛选叠加正确</td>
+      </tr>
+      <tr>
+        <td>测试与构建</td>
+        <td>15</td>
+        <td>覆盖风险边界与旧数据，构建通过</td>
+      </tr>
+      <tr>
+        <td>代码说明</td>
+        <td>10</td>
+        <td>说明状态归属、事件清理与上线差距</td>
+      </tr>
+    </table>
+    <h2>课程自测（含答案）</h2>
+    <ol>
+      <li>
+        clearChanges 能否撤销对象修改？
+        <details>
+          <summary>答案</summary>
+          不能，它清除变更跟踪标记。
+        </details>
+      </li>
+      <li>
+        虚拟滚动是否减少接口传输量？
+        <details>
+          <summary>答案</summary>
+          不直接减少，它主要减少渲染的行与 DOM。
+        </details>
+      </li>
+      <li>
+        JSON 保存日期后为什么会出错？
+        <details>
+          <summary>答案</summary>
+          Date 会变成字符串，恢复时应转换并校验。
+        </details>
+      </li>
+      <li>
+        前台下拉限制是否等同于权限？
+        <details>
+          <summary>答案</summary>
+          不是。后台需校验权限和输入，不能相信浏览器。
+        </details>
+      </li>
+      <li>
+        为什么不在每次 render 时创建 CollectionView？
+        <details>
+          <summary>答案</summary>
+          会重置视图、当前项和事件关系；稳定实例更易保持状态并正确清理。
+        </details>
+      </li>
+    </ol>
+  </main>
+</html>
