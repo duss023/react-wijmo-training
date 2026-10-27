@@ -4,19 +4,16 @@
 
 ## 启动
 
-需要 Node.js 22 或以上。
+需要 Node.js 21 或以上。
 
 ```sh
-npm ci
+npm install
 npm run dev
 ```
 
 - Demo：http://127.0.0.1:5173/
 - 学习课件：http://127.0.0.1:5173/training/index.html
-- 课件源码片段更新：`npm run training`
-- 构建：`npm run build`
-- 构建预览：`npm run preview`
-- 测试：`npm test`
+
 
 ## 示例内容
 
