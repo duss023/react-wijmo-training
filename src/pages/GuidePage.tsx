@@ -61,7 +61,7 @@ export default function GuidePage({ model }: { model: ProjectModel }) {
       <a href="/api/projects?delay=0" target="_blank">
         直接查看模拟 API 的 JSON 响应 ↗
       </a>
-      <p>最近一次成功 GET 的响应预览（只展示前两条，total 是全部记录数）：</p>
+      <p>最近一次成功 GET 的响应预览（只展示前两条，total 是本次匹配记录数）：</p>
       <pre className="api-preview">
         {apiResponse
           ? JSON.stringify(

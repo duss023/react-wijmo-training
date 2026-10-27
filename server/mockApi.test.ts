@@ -48,6 +48,69 @@ test("浏览器 API 客户端与本地 HTTP 模拟服务的真实请求链路", 
     );
     assert.equal(typeof raw.data[0].start, "string");
   });
+  await t.test("API 组合检索、中文编码、无匹配及清空条件", async () => {
+    const result = await loadProjects(
+      new AbortController().signal,
+      false,
+      0,
+      " 门户 ",
+      "研发部",
+    );
+    assert.equal(result.total, 10);
+    assert.ok(
+      result.data.every(
+        (r) => r.name.includes("门户") && r.department === "研发部",
+      ),
+    );
+    assert.equal(
+      (
+        await loadProjects(
+          new AbortController().signal,
+          false,
+          0,
+          "不存在的项目",
+        )
+      ).total,
+      0,
+    );
+    assert.equal(
+      (
+        await loadProjects(
+          new AbortController().signal,
+          false,
+          0,
+          "王明",
+          "营业部",
+        )
+      ).total,
+      6,
+    );
+    assert.equal(
+      (await loadProjects(new AbortController().signal, false, 0)).total,
+      120,
+    );
+  });
+  await t.test("保存检索结果的编辑和删除，不丢失未匹配记录", async () => {
+    const result = await loadProjects(
+      new AbortController().signal,
+      false,
+      0,
+      "",
+      "研发部",
+    );
+    const removed = result.data.pop()!;
+    result.data[0].name = "检索结果编辑验证";
+    await saveProjects(result.data, [removed.id]);
+    const all = await loadProjects(new AbortController().signal, false, 0);
+    assert.equal(all.total, 119);
+    assert.equal(all.data.filter((r) => r.department === "营业部").length, 30);
+    assert.equal(
+      all.data.find((r) => r.id === result.data[0].id)?.name,
+      "检索结果编辑验证",
+    );
+    assert.ok(!all.data.some((r) => r.id === removed.id));
+    await resetProjects();
+  });
   await t.test("HTTP 500 转为 ApiError，故障关闭后可恢复", async () => {
     await assert.rejects(
       loadProjects(new AbortController().signal, true, 0),

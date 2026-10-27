@@ -6,7 +6,7 @@ import {
   FlexGridCellTemplate,
 } from "@mescius/wijmo.react.grid";
 import { FlexGridFilter } from "@mescius/wijmo.react.grid.filter";
-import { ComboBox, CollectionViewNavigator } from "@mescius/wijmo.react.input";
+import { ComboBox, CollectionViewNavigator, InputDate } from "@mescius/wijmo.react.input";
 import { departmentOptions } from "../domain";
 import type { ProjectModel } from "../useProjectModel";
 // 保持选项数组引用稳定，避免重渲染时 ComboBox 重置选择并触发变更事件。
@@ -35,6 +35,8 @@ export default function GridPage({ model }: { model: ProjectModel }) {
     exportPdf,
     departmentMap,
     statusMap,
+    pending,
+    saving,
   } = model;
   return (
     <>
@@ -42,7 +44,8 @@ export default function GridPage({ model }: { model: ProjectModel }) {
         <label>
           搜索
           <input
-            placeholder="项目名称 / 负责人"
+            placeholder="项目名称 / 负责人（API 检索）"
+            disabled={pending > 0 || saving}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -50,6 +53,7 @@ export default function GridPage({ model }: { model: ProjectModel }) {
         <label>
           部门
           <ComboBox
+            isDisabled={pending > 0 || saving}
             itemsSource={departmentFilterOptions}
             displayMemberPath="value"
             selectedValuePath="key"
@@ -87,6 +91,11 @@ export default function GridPage({ model }: { model: ProjectModel }) {
           按部门分组
         </label>
       </div>
+      <p role="status">
+        {pending > 0
+          ? "有未保存变更：请先保存，再修改 API 检索条件。"
+          : "搜索及部门条件停止变化 300ms 后请求 API；新请求会取消旧请求。"}
+      </p>
       <div className="actions">
         <button onClick={add} disabled={loading || !!error}>
           ＋ 新增
@@ -180,8 +189,23 @@ export default function GridPage({ model }: { model: ProjectModel }) {
           binding="start"
           header="开始日期"
           format="yyyy-MM-dd"
-          width={125}
-        />
+          width={150}
+        >
+          <FlexGridCellTemplate
+            cellType="CellEdit"
+            template={(ctx) => (
+              <InputDate
+                value={ctx.value}
+                format="yyyy-MM-dd"
+                isRequired={true}
+                valueChanged={(control) => {
+                  // 更新编辑缓冲值，由网格提交；Esc 可撤销本次编辑。
+                  ctx.value = control.value;
+                }}
+              />
+            )}
+          />
+        </FlexGridColumn>
         <FlexGridColumn binding="active" header="有效" width={65} />
       </FlexGrid>
       <div className="gridfoot">
@@ -196,7 +220,8 @@ export default function GridPage({ model }: { model: ProjectModel }) {
       </div>
       <div className="callout">
         实验提示：先筛选部门，再切换分组，观察 CollectionView
-        如何驱动同一张表。卡片和图表统计的是全部源数据。
+        如何驱动同一张表。卡片和图表统计的是本次 API
+        检索结果；分页、分组和列筛选在浏览器处理。
       </div>
     </>
   );

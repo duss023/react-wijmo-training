@@ -40,7 +40,10 @@ export function useProjectModel(tab: string) {
   const [saving, setSaving] = useState(false);
   const [apiResponse, setApiResponse] = useState<ProjectResponse | null>(null);
   const grid = useRef<GridControl | null>(null);
-  const departmentMap = useMemo(() => new DataMap(departmentOptions, "key", "value"), []),
+  const departmentMap = useMemo(
+      () => new DataMap(departmentOptions, "key", "value"),
+      [],
+    ),
     statusMap = useMemo(() => new DataMap(statusOptions, "key", "value"), []);
   useEffect(() => {
     const change = () => {
@@ -60,36 +63,29 @@ export function useProjectModel(tab: string) {
     const controller = new AbortController();
     setLoading(true);
     setError("");
-    loadProjects(controller.signal, fail, delayMs)
-      .then((response) => {
-        if (controller.signal.aborted) return;
-        const rows = response.data;
-        setApiResponse(structuredClone(response));
-        view.sourceCollection = rows;
-        view.clearChanges();
-      })
-      .catch((e) => {
-        if (e.name !== "AbortError") setError(e.message);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
-      });
-    return () => controller.abort();
-  }, [request, fail, view, delayMs]);
-  useEffect(() => {
-    // 列筛选使用 view.filter；工具栏条件放在 filters 中，二者按 AND 组合。
-    const predicate = (row: Project) =>
-      (department === "全部部门" || row.department === department) &&
-      `${row.name} ${row.owner}`.toLowerCase().includes(query.toLowerCase());
     const timer = setTimeout(() => {
-      view.filters.push(predicate);
-      view.moveToFirstPage();
-    }, 200);
+      loadProjects(controller.signal, fail, delayMs, query, department)
+        .then((response) => {
+          if (controller.signal.aborted) return;
+          const rows = response.data;
+          setApiResponse(structuredClone(response));
+          view.sourceCollection = rows;
+          view.clearChanges();
+          view.moveToFirstPage();
+          setDraft(null);
+        })
+        .catch((e) => {
+          if (e.name !== "AbortError") setError(e.message);
+        })
+        .finally(() => {
+          if (!controller.signal.aborted) setLoading(false);
+        });
+    }, 300);
     return () => {
       clearTimeout(timer);
-      view.filters.remove(predicate);
+      controller.abort();
     };
-  }, [query, department, view]);
+  }, [request, fail, view, delayMs, query, department]);
   useEffect(() => {
     view.pageSize = pageSize;
   }, [pageSize, view]);
@@ -98,7 +94,7 @@ export function useProjectModel(tab: string) {
   const pending =
     view.itemsAdded.length + view.itemsEdited.length + view.itemsRemoved.length;
   async function save() {
-    if (saving) return;
+    if (saving || loading || error) return;
     if (tab === "grid" && grid.current && !grid.current.finishEditing()) {
       setMessage("请先修正当前单元格的错误");
       return;
@@ -111,7 +107,10 @@ export function useProjectModel(tab: string) {
     const snapshot = serialize(rows);
     setSaving(true);
     try {
-      await saveProjects(JSON.parse(snapshot));
+      await saveProjects(
+        JSON.parse(snapshot),
+        view.itemsRemoved.map((row) => row.id!),
+      );
       if (serialize(view.sourceCollection as Project[]) === snapshot)
         view.clearChanges();
       bump((n) => n + 1);
@@ -146,7 +145,7 @@ export function useProjectModel(tab: string) {
   function add() {
     const item = {
       ...makeProjects(1)[0],
-      id: Math.max(0, ...rows.map((r) => r.id)) + 1,
+      id: Math.max(Date.now(), ...rows.map((r) => r.id)) + 1,
       name: "新项目",
       progress: 0,
       status: "计划中",

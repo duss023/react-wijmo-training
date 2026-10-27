@@ -31,3 +31,5 @@ FlexGrid 数据绑定、key/value 下拉映射、排序筛选与分页、编辑�
 Wijmo 是商业组件，未配置许可证时使用试用模式。可复制 `.env.example` 为 `.env.local` 填入合法 distribution key；前端 VITE_ 变量会进入浏览器，请勿放入服务端密钥。本地环境文件不提交到仓库。
 
 更详细的工程说明参见 [README.txt](README.txt)。
+
+检索：关键词与部门通过 GET /api/projects 的 q、department 参数发送，停止输入 300ms 后请求；分页、分组和列筛选仍在客户端执行。卡片/图表统计本次检索结果。有未保存变更时先保存再修改检索条件。界面 PUT 提交 { rows, removedIds } 按 ID 合并，保留未返回的其他项目；数组请求体仍支持全量替换。

@@ -57,7 +57,14 @@ export function createMockApi() {
           });
           return;
         }
-        send(res, 200, { data: projects, total: projects.length, requestId });
+        const keyword = (url.searchParams.get("q") ?? "").trim().toLowerCase();
+        const department = url.searchParams.get("department") ?? "";
+        const data = projects.filter(
+          (row) =>
+            (!department || row.department === department) &&
+            `${row.name} ${row.owner}`.toLowerCase().includes(keyword),
+        );
+        send(res, 200, { data, total: data.length, requestId });
         return;
       }
       if (req.method === "PUT") {
@@ -67,13 +74,28 @@ export function createMockApi() {
           if (Buffer.byteLength(body) > 1024 * 1024)
             throw new Error("请求体过大");
         }
-        const rows = deserialize(body);
+        const payload = JSON.parse(body);
+        const merge = !Array.isArray(payload);
+        const rows = deserialize(merge ? JSON.stringify(payload.rows) : body);
+        const removedIds: number[] = merge ? payload.removedIds : [];
+        if (
+          !Array.isArray(removedIds) ||
+          removedIds.some((id) => !Number.isSafeInteger(id) || id <= 0)
+        )
+          throw new Error("删除 ID 格式错误");
         if (
           rows.some((row) => !Number.isSafeInteger(row.id) || row.id <= 0) ||
           new Set(rows.map((row) => row.id)).size !== rows.length
         )
           throw new Error("项目 ID 必须为不重复的正整数");
-        projects = rows;
+        // 检索结果提交使用合并模式，保留本次未返回的项目。
+        const changedIds = new Set([
+          ...rows.map((row) => row.id),
+          ...removedIds,
+        ]);
+        projects = merge
+          ? [...projects.filter((row) => !changedIds.has(row.id)), ...rows]
+          : rows;
         send(res, 200, { data: projects, total: projects.length, requestId });
         return;
       }

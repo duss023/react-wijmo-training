@@ -54,7 +54,7 @@
       {
         "file": "api/projects.ts",
         "start": 38,
-        "end": 48
+        "end": 52
       },
       {
         "file": "api/projects.ts",
@@ -64,12 +64,12 @@
       {
         "file": "server/mockApi.ts",
         "start": 44,
-        "end": 62
+        "end": 69
       },
       {
         "file": "useProjectModel.ts",
-        "start": 59,
-        "end": 78
+        "start": 62,
+        "end": 88
       },
       {
         "file": "App.tsx",
@@ -78,8 +78,8 @@
       },
       {
         "file": "pages/GridPage.tsx",
-        "start": 109,
-        "end": 131
+        "start": 118,
+        "end": 140
       }
     ]
   },
@@ -101,13 +101,13 @@
       },
       {
         "file": "pages/GridPage.tsx",
-        "start": 133,
-        "end": 137
+        "start": 142,
+        "end": 146
       },
       {
         "file": "pages/GridPage.tsx",
-        "start": 153,
-        "end": 158
+        "start": 162,
+        "end": 167
       },
       {
         "file": "pages/FormPage.tsx",
@@ -123,9 +123,14 @@
     "image": "screens/grid.png",
     "sources": [
       {
-        "file": "useProjectModel.ts",
-        "start": 80,
-        "end": 91
+        "file": "server/mockApi.ts",
+        "start": 60,
+        "end": 69
+      },
+      {
+        "file": "api/projects.ts",
+        "start": 38,
+        "end": 52
       }
     ]
   },
@@ -137,13 +142,13 @@
     "sources": [
       {
         "file": "pages/GridPage.tsx",
-        "start": 80,
-        "end": 86
+        "start": 84,
+        "end": 90
       },
       {
         "file": "pages/GridPage.tsx",
-        "start": 99,
-        "end": 102
+        "start": 108,
+        "end": 111
       }
     ]
   },
@@ -155,13 +160,13 @@
     "sources": [
       {
         "file": "useProjectModel.ts",
-        "start": 94,
-        "end": 95
+        "start": 90,
+        "end": 91
       },
       {
         "file": "pages/GridPage.tsx",
-        "start": 188,
-        "end": 193
+        "start": 212,
+        "end": 217
       }
     ]
   },
@@ -173,8 +178,13 @@
     "sources": [
       {
         "file": "pages/GridPage.tsx",
-        "start": 165,
-        "end": 177
+        "start": 174,
+        "end": 186
+      },
+      {
+        "file": "pages/GridPage.tsx",
+        "start": 189,
+        "end": 208
       }
     ]
   },
@@ -191,8 +201,8 @@
       },
       {
         "file": "useProjectModel.ts",
-        "start": 198,
-        "end": 211
+        "start": 197,
+        "end": 210
       },
       {
         "file": "pages/FormPage.tsx",
@@ -232,8 +242,8 @@
       },
       {
         "file": "useProjectModel.ts",
-        "start": 200,
-        "end": 204
+        "start": 199,
+        "end": 203
       }
     ]
   },
@@ -245,13 +255,13 @@
     "sources": [
       {
         "file": "useProjectModel.ts",
-        "start": 46,
-        "end": 57
+        "start": 49,
+        "end": 60
       },
       {
         "file": "useProjectModel.ts",
-        "start": 97,
-        "end": 97
+        "start": 93,
+        "end": 93
       }
     ]
   },
@@ -322,8 +332,8 @@
     "sources": [
       {
         "file": "useProjectModel.ts",
-        "start": 60,
-        "end": 77
+        "start": 63,
+        "end": 87
       },
       {
         "file": "App.tsx",
@@ -345,13 +355,13 @@
     "sources": [
       {
         "file": "api/projects.ts",
-        "start": 49,
-        "end": 55
+        "start": 53,
+        "end": 64
       },
       {
         "file": "useProjectModel.ts",
-        "start": 111,
-        "end": 124
+        "start": 107,
+        "end": 120
       }
     ]
   },
@@ -363,8 +373,8 @@
     "sources": [
       {
         "file": "useProjectModel.ts",
-        "start": 165,
-        "end": 189
+        "start": 164,
+        "end": 188
       }
     ]
   }

@@ -39,18 +39,27 @@ export async function loadProjects(
   signal: AbortSignal,
   fail = false,
   delay = 600,
+  keyword = "",
+  department = "全部部门",
 ): Promise<ProjectResponse> {
   const query = new URLSearchParams({
     fail: String(fail),
     delay: String(delay),
+    q: keyword.trim(),
+    department: department === "全部部门" ? "" : department,
   });
   return requestProjects(`/api/projects?${query}`, { signal });
 }
-export function saveProjects(rows: Project[]): Promise<ProjectResponse> {
+export function saveProjects(
+  rows: Project[],
+  removedIds?: number[],
+): Promise<ProjectResponse> {
   return requestProjects("/api/projects", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: serialize(rows),
+    body: removedIds
+      ? JSON.stringify({ rows: JSON.parse(serialize(rows)), removedIds })
+      : serialize(rows),
   });
 }
 export function resetProjects(): Promise<ProjectResponse> {
